@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light dark;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    background: theme("colors.surface.light");
+    color: theme("colors.ink.light");
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "ss01", "tnum";
+  }
+
+  html.dark body {
+    background: theme("colors.surface.dark");
+    color: theme("colors.ink.dark");
+  }
+
+  /* Apple-style focus ring */
+  :focus-visible {
+    outline: 2px solid theme("colors.accent");
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  /* Hide default number input spinners — cleaner Apple feel */
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+
+  /* Native select arrow */
+  select {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'><path fill='%236e6e73' d='M6 8L0 0h12z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 10px 7px;
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 40px;
+  }
+}
+
+@layer components {
+  .field-label {
+    @apply block text-[13px] font-medium tracking-tight text-muted-light dark:text-muted-dark mb-2;
+  }
+
+  .field-input {
+    @apply w-full bg-card-light dark:bg-card-dark
+           border border-hairline-light dark:border-hairline-dark
+           rounded-xl px-4 py-3 text-[17px] leading-tight
+           text-ink-light dark:text-ink-dark
+           placeholder:text-muted-light/60 dark:placeholder:text-muted-dark/60
+           transition-colors duration-200 ease-apple
+           focus:border-accent focus:outline-none;
+  }
+
+  .field-help {
+    @apply mt-1.5 text-[12px] text-muted-light dark:text-muted-dark;
+  }
+
+  .card {
+    @apply bg-card-light dark:bg-card-dark
+           border border-hairline-light/70 dark:border-hairline-dark/70
+           rounded-xl2;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2
+           bg-accent text-white font-medium
+           rounded-full px-6 py-3 text-[17px]
+           transition-all duration-200 ease-apple
+           hover:bg-accent-hover hover:scale-[1.01]
+           active:scale-[0.99]
+           disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2
+           text-accent font-medium
+           rounded-full px-4 py-2 text-[15px]
+           transition-colors duration-200 ease-apple
+           hover:bg-accent/10;
+  }
+
+  .prob-bar {
+    @apply h-1.5 rounded-full bg-accent;
+    transition: width 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 0ms !important;
+    animation-duration: 0ms !important;
+  }
+}
