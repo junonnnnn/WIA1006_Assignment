@@ -30,7 +30,10 @@ export function ExplainPanel({ topClass, entries, meta }: Props) {
       <ul className="space-y-4">
         {top5.map((e) => {
           const supports = e.delta > 0;
-          const width = `${Math.min(100, (Math.abs(e.delta) / maxAbs) * 100).toFixed(1)}%`;
+          // Bars grow from the centerline outward, so max usable width is 50%
+          // of the track on either side.
+          const widthPct = Math.min(50, (Math.abs(e.delta) / maxAbs) * 50);
+          const width = `${widthPct.toFixed(2)}%`;
           return (
             <li
               key={e.field}
@@ -39,7 +42,7 @@ export function ExplainPanel({ topClass, entries, meta }: Props) {
               <span className="text-[14px] text-ink-light dark:text-ink-dark">
                 {e.label}
               </span>
-              <div className="relative h-1.5 rounded-full bg-hairline-light dark:bg-hairline-dark">
+              <div className="relative h-1.5 rounded-full bg-hairline-light dark:bg-hairline-dark overflow-hidden">
                 <div
                   className="absolute top-0 bottom-0 rounded-full"
                   style={{
@@ -50,7 +53,7 @@ export function ExplainPanel({ topClass, entries, meta }: Props) {
                     transition: "width 600ms cubic-bezier(0.4, 0, 0.2, 1)",
                   }}
                 />
-                <div className="absolute left-1/2 top-[-3px] bottom-[-3px] w-px bg-muted-light/40 dark:bg-muted-dark/40" />
+                <div className="absolute left-1/2 top-0 bottom-0 w-px bg-muted-light/40 dark:bg-muted-dark/40" />
               </div>
               <span className="text-[13px] tabular-nums text-muted-light dark:text-muted-dark text-right">
                 {(e.delta * 100).toFixed(1)}%
